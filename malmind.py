@@ -16,6 +16,7 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 
 def train(x_train, isMalware):
+    x_train = np.array([x_train])
     isMalware = int(isMalware)
     y_train = [1] if isMalware else [0]
     y_train = np.array(y_train);
@@ -34,6 +35,11 @@ class RootController(TGController):
     def test(self, vector):
         vector = eval(vector);
         return test(np.array([vector]))
+    @expose()
+    def train(self, vector, isMalware):
+        vector = eval(vector);
+        train(vector, isMalware)
+        return 'ok'
 config = AppConfig(minimal=True, root_controller=RootController())
 
 application = config.make_wsgi_app()

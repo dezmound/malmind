@@ -46,6 +46,6 @@ http://localhost:3008/train?test=[5,2,3,4,1,...]
 Response sent as described format:
 ```json
 {
-    "isMalware": true | false
+    "isMalware": true
 }
 ```
