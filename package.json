@@ -1,0 +1,13 @@
+{
+  "name": "malmind",
+  "version": "0.0.0",
+  "description": "Malware mind catcher. Neuro network based analys center.",
+  "main": "index.js",
+  "scripts": {
+    "pydep": "./install.sh",
+    "start": "python malmind.py"
+  },
+  "keywords": [],
+  "author": "Dezmound",
+  "license": "ISC"
+}
