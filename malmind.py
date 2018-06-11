@@ -4,14 +4,15 @@ from keras.layers import Dense, Dropout
 from tg import expose, TGController, AppConfig
 from wsgiref.simple_server import make_server
 
+samples_memory = []
+outputs_memory = []
+
 model = Sequential()
 model.add(Dense(64, input_dim=100, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(256, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1, activation='linear'))
 
@@ -20,12 +21,13 @@ model.compile(loss='mean_squared_error',
               metrics=['accuracy'])
 
 def train(x_train, y_train):
-    x_train = np.array([x_train])
-    y_train = [[int(y_train)]]
-    y_train = np.array(y_train)
+    samples_memory.append(x_train)
+    x_train = np.array(samples_memory)
+    outputs_memory.append([int(y_train)])
+    y_train = np.array(outputs_memory)
     model.fit(x_train, y_train,
           epochs=2000,
-          batch_size=1)
+          batch_size=len(x_train))
 def test(x_test):
     score = model.predict(x_test, batch_size=1)
     print score
