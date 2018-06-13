@@ -4,7 +4,6 @@ from keras.layers import Dense, Dropout
 from tg import expose, TGController, AppConfig
 from wsgiref.simple_server import make_server
 import argparse
-import matplotlib.pyplot as plt
 import os
 
 parser = argparse.ArgumentParser(description='Neural network classification service.')
@@ -13,7 +12,11 @@ parser.add_argument('-G')
 parser.add_argument('-M')
 args = parser.parse_args()
 
-args.M = os.environ['MODEL'] if args.M == None else args.M
+if args.G != None:
+    import matplotlib.pyplot as plt
+
+args.M = os.environ.get('MODEL') if args.M == None else args.M
+args.E = os.environ.get('EPOCHS') if args.E == None else args.E
 if args.G != None:
     x_train = np.random.random((100, 100))
     y_train = np.random.randint(1, size=(100, 1))
