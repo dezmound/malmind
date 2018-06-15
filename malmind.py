@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(description='Neural network classification serv
 parser.add_argument('-E')
 parser.add_argument('-G')
 parser.add_argument('-M')
+parser.add_argument('-S')
 args = parser.parse_args()
 
 if args.G != None:
@@ -43,6 +44,10 @@ else:
 model.compile(loss='mean_squared_error',
               optimizer='rmsprop',
               metrics=['accuracy'])
+if args.S != None:
+    from keras.utils import plot_model
+    plot_model(model, to_file=args.S)
+
 if args.G != None:
     history = model.fit(x_train, y_train, epochs=int(args.E) if args.E else 30, batch_size=100)
 
